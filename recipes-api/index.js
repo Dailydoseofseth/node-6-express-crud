@@ -104,6 +104,13 @@ app.get("/get-recipes-count", async (req, res) => {
   // call the helper FUNC. Store in VAR.
   const recipesCount = await getRecipesCount();
   // return the VAR to the endpoint
+  // means:
+  // Create an object.
+  // Inside that object...
+  // Create a property called
+  // count
+  //  add : (key-value pair operator) to it
+  // whose value is whatever is inside the recipesCount variable
   res.json({ count: recipesCount });
   console.log("RECIPES COUNT SAYS:", recipesCount);
 });
