@@ -11,9 +11,10 @@ const app = express();
 const port = 3000;
 
 // app.use(cors());
+// middleware: this SERVER will receive & RESpond in JSON format
 app.use(express.json());
 
-//
+// 
 app.listen(port, () => {
   console.log(`Server is running HOT on http://localhost:${port}`);
 });
@@ -42,7 +43,6 @@ async function getOneRecipe(index) {
   // separate the JSON file into a JS OBJect (parsedData) using the JSON.parse() method
   // PARSE IT
   const parsedData = JSON.parse(data);
-
 
   // STORE IT & CAPTURE IT
 
@@ -79,6 +79,7 @@ async function getRecipesCount() {
 // API Endpoints
 // ---------------------------------
 
+app.ge
 // 1. GET /get-all-recipes
 app.get("/get-all-recipes", async (req, res) => {
   // call the helper FUNC. Store in VAR.
@@ -122,5 +123,5 @@ app.get("/get-recipes-count", async (req, res) => {
   // whose value is whatever is inside the recipesCount variable
   //   res.json({ count: recipesCount });
   res.json({ count });
-  console.log("RECIPES COUNT SAYS:", recipesCount);
+  console.log("RECIPES COUNT SAYS:", count);
 });
