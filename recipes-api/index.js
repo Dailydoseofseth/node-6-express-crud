@@ -13,6 +13,7 @@ const port = 3000;
 // app.use(cors());
 app.use(express.json());
 
+//
 app.listen(port, () => {
   console.log(`Server is running HOT on http://localhost:${port}`);
 });
@@ -33,11 +34,18 @@ async function getAllRecipes() {
 }
 // 2. getOneRecipe(index)
 async function getOneRecipe(index) {
+  // store the JSON file into VAR (data) as a STRING
+  // using the fs.readFile() method from the fs/promises module
   // READ IT
   const data = await fs.readFile("recipes-data.json", "utf-8");
+
+  // separate the JSON file into a JS OBJect (parsedData) using the JSON.parse() method
   // PARSE IT
   const parsedData = JSON.parse(data);
+
+
   // STORE IT & CAPTURE IT
+
   const recipe = parsedData[index];
   // BOP IT!!! .....ERRR... DROP IT!!! .....ERRRRR we meant RETURN IT!!!
   return recipe;
@@ -102,8 +110,8 @@ app.get("/get-all-recipe-names", async (req, res) => {
 // 4. GET /get-recipes-count
 app.get("/get-recipes-count", async (req, res) => {
   // call the helper FUNC. Store in VAR.
-    // const recipesCount = await getRecipesCount();
-    const count = await getRecipesCount();
+  // const recipesCount = await getRecipesCount();
+  const count = await getRecipesCount();
   // return the VAR to the endpoint
   // means:
   // Create an object.
@@ -112,7 +120,7 @@ app.get("/get-recipes-count", async (req, res) => {
   // count
   //  add : (key-value pair operator) to it
   // whose value is whatever is inside the recipesCount variable
-    //   res.json({ count: recipesCount });
-    res.json({ count });
+  //   res.json({ count: recipesCount });
+  res.json({ count });
   console.log("RECIPES COUNT SAYS:", recipesCount);
 });
