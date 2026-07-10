@@ -14,7 +14,7 @@ const port = 3000;
 // middleware: this SERVER will receive & RESpond in JSON format
 app.use(express.json());
 
-// 
+//
 app.listen(port, () => {
   console.log(`Server is running HOT on http://localhost:${port}`);
 });
@@ -33,21 +33,24 @@ async function getAllRecipes() {
   // BOP IT (...errr... we meant RETURN IT!!!)
   return parsedData;
 }
+
+// This HELPER FUNCtion's job is to find and return ONE recipe from our JSON file.
 // 2. getOneRecipe(index)
 async function getOneRecipe(index) {
-  // store the JSON file into VAR (data) as a STRING
-  // using the fs.readFile() method from the fs/promises module
+  // store the JSON file into VAR (data) as a STRING.
+  // using the fs.readFile() method from the fs/promises module.
+  // JSON DATA COMES BACK AS TEXT--->>.
   // READ IT
   const data = await fs.readFile("recipes-data.json", "utf-8");
 
-  // separate the JSON file into a JS OBJect (parsedData) using the JSON.parse() method
+  // separate the JSON file into a JS OBJect (parsedData) using the JSON.parse() method.
   // PARSE IT
   const parsedData = JSON.parse(data);
 
+  // We use the index number to find one recipe in the array.
   // STORE IT & CAPTURE IT
-
   const recipe = parsedData[index];
-  // BOP IT!!! .....ERRR... DROP IT!!! .....ERRRRR we meant RETURN IT!!!
+  // BOP IT!!! .....ERRR... DROP IT!!! .....ERRRRR we meant >>>>RETURN IT!!!<<<<<
   return recipe;
 }
 
@@ -79,7 +82,7 @@ async function getRecipesCount() {
 // API Endpoints
 // ---------------------------------
 
-app.ge
+app.ge;
 // 1. GET /get-all-recipes
 app.get("/get-all-recipes", async (req, res) => {
   // call the helper FUNC. Store in VAR.
@@ -89,15 +92,45 @@ app.get("/get-all-recipes", async (req, res) => {
 });
 
 // 2. GET /get-one-recipe/:index
+// we create a GET route
+// 2 arguments(1 is dynamic URL. 2nd is async arrow FUNC with its 2 PARAMS)
+// CREATE IT!
 app.get("/get-one-recipe/:index", async (req, res) => {
-  // capture the index from the URL
+  // capture/grab the index from the URL (that USER inputs)
+  // converts from STRING to a NUM
+  // GRAB IT
   const index = req.params.index;
-  // call()... the HELPER FUNC .THEN, Store in VAR (recipe)
+
+  // call()... the HELPER FUNC,
+  // HELPER FUNC returns ONE RECIPE
+  // ...THEN, Store in VAR (recipe)
+  // CALL IT!
   const recipe = await getOneRecipe(index);
+
   // return the VAR to the endpoint
+  // We send that recipe back to the client using res.json().
+  // SEND IT!
   res.json(recipe);
   console.log("RECIPE SAYS:", recipe);
 });
+
+// -------------------------------------
+// -------WHAT HAPPENS:------------------
+// -------------------------------------
+// What Happens?  ????????????????  ?
+// User requests /get-one-recipe/1
+// req.params.index = "1"
+// Number("1") = 1
+// getOneRecipe(1) runs
+// JSON file is read
+// Recipe at position 1 is selected
+// Recipe is returned
+// res.json(recipe) sends it back to Postman/browser
+// Super Simple One-Liner
+
+// "This endpoint takes an index from the URL, reads the recipes JSON file, finds the recipe at that index position, and sends that recipe back to the client as JSON."
+
+// -------------------------------------
 
 // 3. GET /get-all-recipe-names
 app.get("/get-all-recipe-names", async (req, res) => {

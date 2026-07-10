@@ -66,3 +66,59 @@ app.get("/get-one-book/:index", async (req, res) => {
 });
 
 // 3. GET /get-one-book-title/:index — try writing this one yourself!
+
+
+
+-------------
+
+// "I'm registering a POST endpoint...";
+// "Express invokes this route handler when a request matches the route.";
+// "I'm destructuring the request payload.";
+// "I'm delegating the persistence logic to a helper function.";
+// "I'm iterating over the collection using a for...of loop.";
+// "I'm executing a parameterized SQL query against PostgreSQL.";
+// "The values are bound to positional parameters.";
+// "I'm awaiting the Promise before continuing execution.";
+// "Once all database operations complete, the server returns an HTTP response to the client.";
+
+---------------
+
+WALKTHROUGH WITH AI:
+// Create an async function called getOneRecipe
+// This function's job is to find and return ONE recipe from our JSON file
+async function getOneRecipe(index) {
+
+    // Read the recipes-data.json file
+    // await pauses the function until the file has finished loading
+    // The file contents are returned as a string because of "utf8"
+    const data = await fs.readFile("recipes-data.json", "utf8");
+
+    // Convert the JSON string into a JavaScript array/object
+    // This allows us to work with the data using JavaScript
+    const parsedData = JSON.parse(data);
+
+    // Get one recipe from the array using the index number provided
+    // Example: index 0 gets the first recipe
+    const recipe = parsedData[index];
+
+    // Send the selected recipe back to wherever this function was called
+    return recipe;
+}
+
+// Create a GET endpoint called /get-one-recipe/:index
+// The :index is a route parameter that the user supplies in the URL
+app.get("/get-one-recipe/:index", async (req, res) => {
+
+    // Get the index value from the URL
+    // Convert it from a string into a number
+    // Example: "2" becomes 2
+    const recipeIndex = Number(req.params.index);
+
+    // Call the getOneRecipe function
+    // Pass in the recipe index from the URL
+    // Wait for the recipe data to be returned
+    const recipe = await getOneRecipe(recipeIndex);
+
+    // Send the recipe back to the client as JSON
+    res.json(recipe);
+});
